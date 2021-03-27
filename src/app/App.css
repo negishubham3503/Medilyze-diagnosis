@@ -1,0 +1,13 @@
+.App {
+  text-align: center;
+}
+
+a {
+  color: white;
+  text-decoration: none;
+}
+
+img:before {
+  content: ' ';
+  background-image: url(https://www.dlf.pt/dfpng/middlepng/276-2761326_default-avatar-person-icon-vector-png-transparent-png.png);
+}

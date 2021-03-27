@@ -1,0 +1,75 @@
+.container-patient {
+    padding-top: 6rem;
+    padding-bottom: 6rem;
+    padding-right: 5rem;
+    padding-left: 5rem;
+    background-image: linear-gradient(80deg, #1990ea 36%, #bfdbf1 36%);
+}
+
+.navbar {
+    position: absolute;
+    top: 3rem;
+    right: 7rem;
+    display: inline-flex;
+}
+
+#account-link {
+    margin-right: 2.5rem;
+    margin-left: 0.5rem;
+}
+
+.content-patient {
+    background-color: white;
+    height: 48rem;
+    border-radius: 2rem;
+}
+
+.logo-image-patient {
+    width: 5.5rem;
+    height: auto;
+    position: absolute;
+    top: 10rem;
+    left: 9rem;
+}
+
+.container-image-patient {
+    width: 71rem;
+    height: 44rem;
+    position: absolute;
+    top: 8.5rem;
+    right: 6rem;
+}
+
+.headings-patient {
+    text-align: left;
+    position: absolute;
+    top: 18rem;
+    left: 9rem;
+}
+
+.otp-form-container-patient {
+    width: 50%;
+    padding: 4rem;
+    position: absolute;
+    top: 21rem;
+    z-index: 10;
+}
+
+.form-container-patient {
+    width: 50%;
+    padding: 4rem;
+    position: absolute;
+    top: 30rem;
+    z-index: 10;
+}
+
+#reset-OTP-link {
+    margin-left: 0.57rem;
+    margin-top: 0.3rem;
+}
+
+#send-otp {
+    margin-top: 0.4rem;
+    border-radius: 6rem;
+    width: 8rem;
+}
