@@ -100,7 +100,7 @@ export default function LoginPatient() {
                 <img src={logo} alt="logo" className="logo-image-patient" />
                 <div className="headings-patient">
                     <Typography className="heading" component="h2" variant="h3">
-                        Welcome!
+                        <strong>Welcome!</strong>
                     </Typography>
                     <Typography className="head-desc" component="h1" variant="h6">
                         Enter patient's information below
@@ -111,7 +111,7 @@ export default function LoginPatient() {
                     <Grid container spacing={2}>
                         <Grid item xs={9}>
                             <TextField
-                                variant="filled"
+                                variant="outlined"
                                 required
                                 fullWidth
                                 id="uid"
@@ -119,6 +119,7 @@ export default function LoginPatient() {
                                 name="phoneNumber"
                                 color="primary"
                                 inputRef={uidRef}
+                                style={{backgroundColor: "#bdd8f2"}}
                             />
                         </Grid>
                         <Grid item xs={3}>
@@ -136,7 +137,7 @@ export default function LoginPatient() {
                         </Grid>
                         <Grid item xs={9}>
                             <TextField
-                                variant="filled"
+                                variant="outlined"
                                 required
                                 fullWidth
                                 id="otp"
@@ -144,6 +145,7 @@ export default function LoginPatient() {
                                 name="otp"
                                 color="primary"
                                 inputRef={otpRef}
+                                style={{backgroundColor: "#bdd8f2"}}
                             />
                         </Grid>
                         <Grid item xs={4}>

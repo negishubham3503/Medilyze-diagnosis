@@ -1,0 +1,69 @@
+.container-dashboard {
+  padding: 6rem 0rem 0rem 6rem;
+  background-color: #290072;
+}
+
+.navbar-right {
+  position: absolute;
+  top: 3rem;
+  right: 5rem;
+  display: inline-flex;
+  color: white;
+}
+
+#account-link-dashboard {
+  margin-right: 2.5rem;
+  margin-left: 0.5rem;
+}
+
+.content-dashboard {
+  background-color: #ffffff;
+}
+
+.patient-image {
+  width: 10rem;
+  height: 10rem;
+  display: inline-block;
+  border-radius: 50%;
+  position: absolute;
+  top: 45rem;
+  left: 7rem;
+}
+
+.personal-details {
+  color: #555555;
+  margin: 3rem 0rem 0rem 0rem;
+}
+
+#contact-button {
+  background-color: #b13222;
+  position: absolute;
+  top: 48rem;
+  right: 5rem;
+  color: white;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-top-left-radius: 0.7rem;
+  border-bottom-right-radius: 0.7rem;
+}
+
+.test-section-dashboard {
+  display: flex;
+}
+
+.sidebar-dashboard {
+  text-align: center;
+}
+
+.test-upload-container {
+  text-align: center;
+  background-image: url("../../../images/Group\ 8.jpg");
+  border-bottom-left-radius: 5rem;
+  padding: 2rem 3rem;
+  color: white;
+  width: 48rem;
+}
+
+.medicine-table {
+  padding: 0.5rem;
+}

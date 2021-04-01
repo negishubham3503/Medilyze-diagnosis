@@ -1,16 +1,15 @@
 .container-patient {
     padding-top: 6rem;
-    padding-bottom: 6rem;
-    padding-right: 5rem;
-    padding-left: 5rem;
-    background-image: linear-gradient(80deg, #1990ea 36%, #bfdbf1 36%);
+    padding-left: 6rem;
+    background-color: #290072;
 }
 
 .navbar {
     position: absolute;
     top: 3rem;
-    right: 7rem;
+    right: 6rem;
     display: inline-flex;
+    color: white;
 }
 
 #account-link {
@@ -21,7 +20,7 @@
 .content-patient {
     background-color: white;
     height: 48rem;
-    border-radius: 2rem;
+    border-top-left-radius: 2rem;
 }
 
 .logo-image-patient {
@@ -37,14 +36,14 @@
     height: 44rem;
     position: absolute;
     top: 8.5rem;
-    right: 6rem;
+    right: 3rem;
 }
 
 .headings-patient {
     text-align: left;
     position: absolute;
     top: 18rem;
-    left: 9rem;
+    left: 10rem;
 }
 
 .otp-form-container-patient {
