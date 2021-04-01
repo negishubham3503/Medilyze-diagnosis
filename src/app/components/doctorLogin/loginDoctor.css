@@ -1,60 +1,42 @@
 .container-doctor {
     padding-top: 6rem;
-    padding-bottom: 6rem;
-    padding-right: 4rem;
-    padding-left: 4rem;
-    background-color: #1990ea;
+    padding-left: 6rem;
+    background-color: #290072;
 }
 
 .content-doctor {
     background-color: #ffffff;
-    height: 44rem;
+    display: flex;
+}
+
+.form-content-doctor {
+    background-color: #4c00aa;
+    color: white;
+    border-bottom-right-radius: 7rem;
+    text-align: left;
+    padding: 3rem 2.5rem;
+    height: 40rem;
 }
 
 .logo-image-doctor {
     width: 5.5rem;
     height: auto;
-    position: absolute;
-    top: 8rem;
-    left: 6rem;
-}
-
-.container-image-doctor {
-    width: 45rem;
-    height: 44rem;
-    position: absolute;
-    top: 6rem;
-    right: 4rem;
+    margin: 1rem 0 2.5rem 0;
 }
 
 .headings-doctor {
-    text-align: left;
-    position: absolute;
-    top: 16rem;
-    left: 8rem;
+    padding-left: 3.5rem;
+    margin-bottom: 2rem;
 }
 
 .form-container-doctor {
-    width: 50%;
-    padding: 4rem;
-    position: absolute;
-    top: 19rem;
-    z-index: 10;
-}
-
-#demo-simple-select-outlined {
-    width: 28.5rem;
+    padding-left: 3.5rem;
 }
 
 .remember-checkbox {
     padding-left: 9px;
     padding-bottom: 0.7rem;
-}
-
-#forgot-password-link {
-    padding-top: 0.6rem;
-    padding-bottom: 0.7rem;
-    margin-left: 13.6rem;
+    color: #00bbff;
 }
 
 .link-to-signup {
