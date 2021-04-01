@@ -8,6 +8,7 @@ import { AuthProvider } from "./contexts/AuthContext";
 import PrivateRoute from './components/privateRoute';
 import LoginDoctor from './components/doctorLogin/loginDoctor';
 import LoginPatient from './components/patientLogin/loginPatient';
+import DashboardPatient from './components/patientDashboard/dashboardPatient';
 import './App.css';
 
 
@@ -17,8 +18,10 @@ function App() {
       <Router>
         <AuthProvider>
           <Switch>
+            <PrivateRoute path="/patientProfile" component={DashboardPatient} />
             <PrivateRoute path="/patientSearch" component={LoginPatient} />
             <Route exact path="/" component={LoginDoctor} />
+            <Route path="/test" component={DashboardPatient} />
           </Switch>
         </AuthProvider>
       </Router> 
