@@ -1,0 +1,29 @@
+.container-list {
+    padding-top: 6rem;
+    padding-left: 6rem;
+    background-color: #290072;
+    color: white;
+}
+
+.navbar-list {
+    position: absolute;
+    top: 3rem;
+    right: 6rem;
+    display: inline-flex;
+}
+
+.content-list {
+    background-color: white;
+    padding: 3rem;
+}
+
+.list-card {
+    border-radius: 3rem;
+    background-color: #202427;
+    padding: 3rem 4rem;
+    min-height: 25rem;
+}
+
+.table-test-list {
+    margin-top: 3rem;
+}
