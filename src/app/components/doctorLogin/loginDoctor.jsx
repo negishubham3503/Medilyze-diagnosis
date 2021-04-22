@@ -12,11 +12,12 @@ import topImage from "../../../images/navbarImage.png"
 import middleImage from "../../../images/sidebarImage.png";
 import bottomImage from "../../../images/2992779.png"
 import { Link, useHistory } from "react-router-dom";
+import { checkUser } from "../../contexts/FirestoreContext";
 
 export default function LoginDoctor() {
     const emailRef = useRef()
     const passwordRef = useRef()
-    const { login, resetPassword } = useAuth()
+    const { login, resetPassword, getUID, logout } = useAuth()
     const [error, setError] = useState("")
     const [reset, setReset] = useState(false)
     const [loading, setLoading] = useState(false)
@@ -29,13 +30,26 @@ export default function LoginDoctor() {
             setError("")
             setLoading(true)
             await login(emailRef.current.value, passwordRef.current.value)
-            history.push("/patientSearch")
+            const UID = getUID();
+            const status = await checkUser(UID)
+            if (status == 'registered-diagnostics') {
+                history.push("/patientSearch")
+            }
+            else {
+                setError("User not permitted to login");
+                logout()
+            }
         } catch (e) {
+            console.log(e)
             if (e.code === 'auth/wrong-password') {
                 console.log("Password is incorrect");
                 setError("Password is incorrect");
             }
             else if (e.code === 'auth/invalid-email') {
+                console.log("User does not exist");
+                setError("User does not exist");
+            }
+            else if (e.code === 'auth/user-not-found') {
                 console.log("User does not exist");
                 setError("User does not exist");
             }
