@@ -104,7 +104,7 @@ export default function DashboardPatient() {
         setOpen(false);
     };
 
-    async function submitReports(e) {
+    async function submitReports(e) {        
         history.push({ pathname: "/test", state: { data:testList }})
         // const uploadTask = await storage.ref(`/`).child(random + '.jpeg').putString(imageSrc.slice(23), 'base64', { contentType: 'image/jpeg' });
 
