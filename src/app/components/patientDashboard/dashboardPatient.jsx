@@ -23,6 +23,8 @@ import { fetchPatientData, fetchDoctorName, getDob } from "../../contexts/Firest
 import { Icon, InlineIcon } from '@iconify/react';
 import genderMaleFemale from '@iconify-icons/mdi/gender-male-female';
 import { AddCircle } from "@material-ui/icons";
+import { getPrescription } from "../../contexts/FirebaseDatabaseContext"
+import { storage } from "../../components/firebase.js";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
@@ -40,45 +42,34 @@ export default function DashboardPatient() {
     const [dob, setDob] = useState("")
 
     // assign testList here
-    const [testList, setTestList] = useState([
-        {
-            test: "Blood Test",
-            type: "patani",
-            file: ""
-        },
-        {
-            test: "ECG",
-            type: "soch lo",
-            file: ""
+    const [testList, setTestList] = useState(location.state.data)
+
+    useEffect(() => {
+        async function fetchData() {
+            const name = await getDob(location.state.pid);
+            setDob(name)
         }
-    ])
-
-    // useEffect(() => {
-    //     async function fetchData() {
-    //         const name = await getDob(location.state.pid);
-    //         setDob(name)
-    //     }
-    //     fetchData();
-    // }, [dob])
+        fetchData();
+    }, [dob])
 
 
-    // useEffect(() => {
-    //     async function fetchData() {
-    //         const UID = getUID();
-    //         const name = await fetchDoctorName(UID);
-    //         setDoctorName(name)
-    //     }
-    //     fetchData();
-    // }, [doctorName])
+    useEffect(() => {
+        async function fetchData() {
+            const UID = getUID();
+            const name = await fetchDoctorName(UID);
+            setDoctorName(name)
+        }
+        fetchData();
+    }, [doctorName])
 
-    // useEffect(() => {
-    //     async function fetchData() {
-    //         const UID = getUID();
-    //         const name = await fetchPatientData(location.state.pid);
-    //         setPatientData(name)
-    //     }
-    //     fetchData();
-    // }, [patientData])
+    useEffect(() => {
+        async function fetchData() {
+            const UID = getUID();
+            const name = await fetchPatientData(location.state.pid);
+            setPatientData(name)
+        }
+        fetchData();
+    }, [patientData])
 
     async function handleExit() {
         setError("")
@@ -113,64 +104,75 @@ export default function DashboardPatient() {
         setOpen(false);
     };
 
+    async function submitReports(e) {
+        history.push({ pathname: "/test", state: { data:testList }})
+        // const uploadTask = await storage.ref(`/`).child(random + '.jpeg').putString(imageSrc.slice(23), 'base64', { contentType: 'image/jpeg' });
+
+    }
+
     return (
         <div className="container-dashboard">
             <div className="navbar-right">
+                <AccountCircleIcon style={{ marginRight: "0.3rem", marginLeft: "2rem" }} />
+                <Typography style={{ marginRight: "1.3rem", }}>
+                    {doctorName}
+                </Typography>
                 <Typography>
                     <Link to="/patientSearch" onClick={handleExit}>Exit</Link>
-                </Typography>
-                <AccountCircleIcon style={{marginRight: "0.3rem", marginLeft: "2rem"}} />
-                <Typography>
-                    Name
                 </Typography>
             </div>
             <div className="content-dashboard">
                 <div className="test-section-dashboard">
                     <div className="sidebar-dashboard">
-                        <img src={SidebarImage} style={{width: "25rem"}} />
-                        <Typography variant="h6" style={{color: "#4f4f4f"}}>
+                        <img src={SidebarImage} style={{ width: "25rem" }} />
+                        <Typography variant="h6" style={{ color: "#4f4f4f" }}>
                             Let's Take Care of Your Health
                         </Typography>
-                        <Button variant="contained" color="primary" style={{margin: "3rem", width: "10rem", borderRadius: "0.7rem"}} size="large">
+                        <Button onClick={submitReports} variant="contained" color="primary" style={{ margin: "3rem", width: "10rem", borderRadius: "0.7rem" }} size="large">
                             Submit
                         </Button>
                     </div>
                     <div className="test-upload-container">
-                        <Typography variant="h3" style={{marginBottom: "2rem"}}>
+                        <Typography variant="h3" style={{ marginBottom: "2rem" }}>
                             Medical Tests
                         </Typography>
                         <Grid container spacing={4}>
-                            {testList.map((medicalTest, index) => 
-                                <Grid container item xs={12} spacing={3} /*style={{border: "2px solid #7213be", borderRadius: "0.5rem"}}*/>
-                                    <Grid container item xs={5} className="medicine-table">
-                                        <TextField
-                                            variant="outlined"
-                                            required
-                                            value={medicalTest.test}
-                                            fullWidth
-                                            multiline
-                                            color="secondary"
-                                            size="small"
-                                            style={{borderRadius: "1rem", backgroundColor: "white"}}
-                                        />
+                            <Grid container item xs={12} spacing={2}>
+                                <Grid container item xs={5} className="medicine-table" style={{ borderRadius: "1rem", backgroundColor: "#292295", marginRight: "2rem", justifyContent:"center" }}>
+                                    <Typography >
+                                        Tests
+                                        </Typography>
+                                </Grid>
+                                <Grid container item xs={4} className="medicine-table" style={{ borderRadius: "1rem", backgroundColor: "#292295", justifyContent:"center"  }}>
+                                    <Typography >
+                                        Type of Tests
+                                        </Typography>
+                                </Grid>
+                            </Grid>
+                            <Grid container item xs={12} spacing={2}>
+                            </Grid>
+                        </Grid>
+                        <Grid container spacing={4}>
+                            {testList.map((medicalTest, index) =>
+                                <Grid container item xs={12} spacing={2} >
+                                    <Grid container item xs={5} className="medicine-table" style={{ borderRadius: "2rem", backgroundColor: "#7213be", marginRight: "2rem", justifyContent:"center"  }}>
+                                        <Typography >
+                                            {medicalTest.test}
+                                        </Typography>
                                     </Grid>
-                                    <Grid container item xs={5} className="medicine-table">
-                                        <TextField
-                                            variant="outlined"
-                                            required
-                                            fullWidth
-                                            multiline
-                                            color="secondary"
-                                            size="small"
-                                            style={{borderRadius: "1rem", backgroundColor: "white"}}
-                                            value={medicalTest.type}
-                                        />
+                                    <Grid container item xs={4} className="medicine-table" style={{ borderRadius: "2rem", backgroundColor: "#7213be", justifyContent:"center"  }}>
+                                        <Typography >
+                                            {medicalTest.type}
+                                        </Typography>
                                     </Grid>
+
                                     <Grid container item xs={2} className="medicine-table">
-                                        <Button variant="contained" component="label" style={{borderRadius: "1rem", backgroundColor: "#6f00e0"}} size="medium">
-                                            {medicalTest.file === "" ? "Add File" : "Uploaded"}
-                                            <Input type="file" style={{display: "none"}} onChange={(e) => {medicalTest.file = e.target.value}} />
-                                        </Button>
+                                        {medicalTest.test == "None" ? <div></div> :
+                                            <Button variant="contained" component="label" style={{ borderRadius: "1rem", backgroundColor: "#6f00e0" }} size="medium">
+                                                {medicalTest.file === "" ? "Add File" : "Uploaded"}
+                                                <input accept="image/*" type="file" style={{ display: "none" }} onChange={(e) => { medicalTest.file = e.target.files[0]; console.log(e.target.files[0]) }} />
+                                            </Button>
+                                        }
                                     </Grid>
                                 </Grid>
                             )}
@@ -180,50 +182,50 @@ export default function DashboardPatient() {
                 <div className="personal-details">
                     <div className="patient-image">
                         <img alt=""
-                            src="" style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
+                            src={patientData.imageUrl} style={{ width: '100%', height: '100%', borderRadius: '50%' }} />
                     </div>
                     <Grid container spacing={1} style={{ width: "40rem", margin: "1.5rem", display: "inline-flex" }}>
                         <Grid container item xs={6}>
                             <AccountCircleIcon style={{ fontSize: 27 }} />
                             <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
-                                Neha Sharma
+                                {patientData.name}
                             </Typography>
                         </Grid>
                         <Grid container item xs={6}>
                             <CallIcon style={{ fontSize: 27 }} />
                             <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
-                                +917895635664
+                                {patientData.phone}
                             </Typography>
                         </Grid>
                         <Grid container item xs={6}>
                             <Icon icon={genderMaleFemale} style={{ fontSize: 25 }} />
                             <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
-                                Female
+                                {patientData.gender}
                             </Typography>
                         </Grid>
 
                         <Grid container item xs={6}>
                             <MailIcon style={{ fontSize: 27 }} />
                             <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
-                                neha@microsoft.com
+                                {patientData.email}
                             </Typography>
                         </Grid>
                         <Grid container item xs={6}>
                             <PermContactCalendarIcon style={{ fontSize: 27 }} />
                             <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
-                                28/02/1996
+                                {dob}
                             </Typography>
                         </Grid>
                         <Grid container item xs={6}>
                             <InvertColorsIcon style={{ fontSize: 27 }} />
                             <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
-                                AB+
+                                {patientData.blood_group}
                             </Typography>
                         </Grid>
                         <Grid container item xs={12}>
                             <LocationOnIcon style={{ fontSize: 27 }} />
                             <Typography variant="subtitle2" align="left" style={{ margin: "0.25rem" }}>
-                                IIITDM Kurnool, Jagannathagattu
+                                {patientData.address}
                             </Typography>
                         </Grid>
                     </Grid>

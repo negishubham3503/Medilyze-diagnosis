@@ -12,6 +12,7 @@ import containerImage from "../../../images/7882.png"
 import { useAuth } from "../../contexts/AuthContext";
 import { fetchDoctorName } from "../../contexts/FirestoreContext";
 import { generateOTP, deleteOtp } from "../../contexts/FirebaseDatabaseContext";
+import { getPrescription } from "../../contexts/FirebaseDatabaseContext"
 
 
 import { useHistory } from "react-router-dom";
@@ -56,13 +57,21 @@ export default function LoginPatient() {
         try {
             setError("")
             setLoading(true)
-            // if (otp == otpRef.current.value && otp.length != 0 && otpRef.current.value.length != 0) {
-            //     await deleteOtp(uidRef.current.value);
-            // }
-            // else {
-            //     setError("Incorrect OTP");
-            // }
-            history.push({ pathname: "/patientProfile", state: { pid: uidRef.current.value } })
+            if (otp == otpRef.current.value && otp.length != 0 && otpRef.current.value.length != 0) {
+                await deleteOtp(uidRef.current.value);
+                var list = []
+                async function fetchData() {
+                    const tests = await getPrescription(uidRef.current.value);
+                    for (var i = 0; i < tests.length; i++) {
+                        list.push({ 'test': tests[i].split(" ").slice(0,tests[i].split(" ").length-1).join(" "), 'type':tests[i].split(" ")[tests[i].split(" ").length-1], 'file':"" })
+                    }
+                }
+                fetchData();
+                history.push({ pathname: "/patientProfile", state: { pid: uidRef.current.value, data:list } })
+            }
+            else {
+                setError("Incorrect OTP");
+            }
         } catch (e) {
             console.log(e);
             setError("Failed to log in")
@@ -119,7 +128,7 @@ export default function LoginPatient() {
                                 name="phoneNumber"
                                 color="primary"
                                 inputRef={uidRef}
-                                style={{backgroundColor: "#bdd8f2"}}
+                                style={{ backgroundColor: "#bdd8f2" }}
                             />
                         </Grid>
                         <Grid item xs={3}>
@@ -145,7 +154,7 @@ export default function LoginPatient() {
                                 name="otp"
                                 color="primary"
                                 inputRef={otpRef}
-                                style={{backgroundColor: "#bdd8f2"}}
+                                style={{ backgroundColor: "#bdd8f2" }}
                             />
                         </Grid>
                         <Grid item xs={4}>
