@@ -63,7 +63,7 @@ export default function LoginPatient() {
                 async function fetchData() {
                     const tests = await getPrescription(uidRef.current.value);
                     for (var i = 0; i < tests.length; i++) {
-                        list.push({ 'test': tests[i].split(" ").slice(0,tests[i].split(" ").length-1).join(" "), 'type':tests[i].split(" ")[tests[i].split(" ").length-1], 'file':"" })
+                        list.push({ 'test': tests[i].split(" ").slice(0,tests[i].split(" ").length-1).join(" "), 'type':tests[i].split(" ")[tests[i].split(" ").length-1], 'file':"", 'prediction':"" })
                     }
                 }
                 fetchData();
