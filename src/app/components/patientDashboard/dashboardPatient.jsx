@@ -104,10 +104,9 @@ export default function DashboardPatient() {
         setOpen(false);
     };
 
-    async function submitReports(e) {        
-        history.push({ pathname: "/test", state: { data:testList }})
-        // const uploadTask = await storage.ref(`/`).child(random + '.jpeg').putString(imageSrc.slice(23), 'base64', { contentType: 'image/jpeg' });
-
+    async function submitReports(e) {
+        console.log(location.state.uid)
+        history.push({ pathname: "/test", state: { data:testList , uid: location.state.uid}})
     }
 
     return (
@@ -138,16 +137,16 @@ export default function DashboardPatient() {
                         </Typography>
                         <Grid container spacing={4}>
                             <Grid container item xs={12} spacing={2}>
-                                <Grid container item xs={5} className="medicine-table" style={{ borderRadius: "1rem", backgroundColor: "#292295", marginRight: "2rem", justifyContent:"center" }}>
+                                <Grid container item xs={8} className="medicine-table" style={{ borderRadius: "1rem", backgroundColor: "#292295", marginRight: "2rem", justifyContent:"center" }}>
                                     <Typography >
                                         Tests
                                         </Typography>
                                 </Grid>
-                                <Grid container item xs={4} className="medicine-table" style={{ borderRadius: "1rem", backgroundColor: "#292295", justifyContent:"center"  }}>
+                                {/* <Grid container item xs={4} className="medicine-table" style={{ borderRadius: "1rem", backgroundColor: "#292295", justifyContent:"center"  }}>
                                     <Typography >
                                         Type of Tests
                                         </Typography>
-                                </Grid>
+                                </Grid> */}
                             </Grid>
                             <Grid container item xs={12} spacing={2}>
                             </Grid>
@@ -155,16 +154,16 @@ export default function DashboardPatient() {
                         <Grid container spacing={4}>
                             {testList.map((medicalTest, index) =>
                                 <Grid container item xs={12} spacing={2} >
-                                    <Grid container item xs={5} className="medicine-table" style={{ borderRadius: "2rem", backgroundColor: "#7213be", marginRight: "2rem", justifyContent:"center"  }}>
+                                    <Grid container item xs={8} className="medicine-table" style={{ borderRadius: "2rem", backgroundColor: "#7213be", marginRight: "2rem", justifyContent:"center"  }}>
                                         <Typography >
                                             {medicalTest.test}
                                         </Typography>
                                     </Grid>
-                                    <Grid container item xs={4} className="medicine-table" style={{ borderRadius: "2rem", backgroundColor: "#7213be", justifyContent:"center"  }}>
+                                    {/* <Grid container item xs={4} className="medicine-table" style={{ borderRadius: "2rem", backgroundColor: "#7213be", justifyContent:"center"  }}>
                                         <Typography >
                                             {medicalTest.type}
                                         </Typography>
-                                    </Grid>
+                                    </Grid> */}
 
                                     <Grid container item xs={2} className="medicine-table">
                                         {medicalTest.test == "None" ? <div></div> :
