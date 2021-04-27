@@ -5,6 +5,10 @@
     color: white;
 }
 
+.submit-button{
+    margin-top: 2rem;
+}
+
 .navbar-list {
     position: absolute;
     top: 3rem;
