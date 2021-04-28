@@ -88,7 +88,7 @@ function Row(props) {
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0, backgroundColor: color }} colSpan={7}>
                     <Collapse in={open} timeout="auto" unmountOnExit>
                         <Box margin={1}>
-                            {row.file != "" && row.test == "Chest Erect PA X Ray" ?
+                            {row.file != "" && (row.test == "Chest Erect PA X Ray" || row.test == "Brain MRI Anterior") ?
                                 <Grid container spacing={2}>
                                     <Grid container item xs={8}>
                                         <img src={URL.createObjectURL(row.file)} style={{ width: '50%' }} />
@@ -100,26 +100,48 @@ function Row(props) {
                                         <Grid container item xs={12} spacing={1}>
                                             <Grid container item xs={10}>
                                                 <Button variant="contained" color="primary" onClick={async () => {
-                                                    if (row.test == "Chest Erect PA X Ray" && row.file != "") {
-                                                        const formData = new FormData();
-                                                        formData.append(
-                                                            "file",
-                                                            row.file,
-                                                        );
+                                                    if ((row.test == "Chest Erect PA X Ray" || row.test == "Brain MRI Anterior") && row.file != "") {
+                                                        if (row.test == "Chest Erect PA X Ray") {
+                                                            const formData = new FormData();
+                                                            formData.append(
+                                                                "file",
+                                                                row.file,
+                                                            );
 
-                                                        axios.post(
-                                                            "http://0.0.0.0:8080/predict", formData, {
-                                                            headers: {
-                                                                'Content-Type': 'multipart/form-data',
-                                                                "Access-Control-Allow-Origin": "*",
-                                                                'responseType': 'arraybuffer'
-                                                            }
-                                                        }).then(async (file) => {
-                                                            await setPrediction("https://storage.googleapis.com/pathology-bucket/predicted_image.png")
-                                                            await console.log(prediction)
-                                                            // window.location.reload();
+                                                            axios.post(
+                                                                "http://0.0.0.0:8081/predict", formData, {
+                                                                headers: {
+                                                                    'Content-Type': 'multipart/form-data',
+                                                                    "Access-Control-Allow-Origin": "*",
+                                                                    'responseType': 'arraybuffer'
+                                                                }
+                                                            }).then(async (file) => {
+                                                                await setPrediction("https://storage.googleapis.com/pathology-bucket/chest_xray.png")
+                                                                await console.log(prediction)
+                                                                // window.location.reload();
 
-                                                        })
+                                                            })
+                                                        }
+                                                        else if (row.test == "Brain MRI Anterior") {
+                                                            const formData = new FormData();
+                                                            formData.append(
+                                                                "file",
+                                                                row.file,
+                                                            );
+
+                                                            axios.post(
+                                                                "http://0.0.0.0:8080/predict", formData, {
+                                                                headers: {
+                                                                    'Content-Type': 'multipart/form-data',
+                                                                    "Access-Control-Allow-Origin": "*",
+                                                                    'responseType': 'arraybuffer'
+                                                                }
+                                                            }).then(async (file) => {
+                                                                await setPrediction("https://storage.googleapis.com/pathology-bucket/brain_mri.png")
+                                                                await console.log(prediction)
+                                                                // window.location.reload();
+                                                            })
+                                                        }
                                                     }
                                                     else {
                                                         console.log("Data")
@@ -146,7 +168,7 @@ function Row(props) {
                                     </Grid>
                                 </Grid> :
 
-                                row.file != "" && row.test != "Chest Erect PA X Ray" ?
+                                row.file != "" && row.test != "Chest Erect PA X Ray" && row.test != "Brain MRI Anterior" ?
                                     <Grid container spacing={2}>
                                         <Grid container item xs={8}>
                                             <img src={URL.createObjectURL(row.file)} style={{ width: '50%' }} />
@@ -241,21 +263,23 @@ export default function TestList() {
 
     async function handleSubmit() {
         // TODO: Hella Submit
-        
-        for (var i = 0; i < rows.length; i++){
+
+        for (var i = 0; i < rows.length; i++) {
             if (rows[i].file.name) {
                 var extension = rows[i].file.name.split('.').pop()
                 var rnd = Math.floor(10000000000000000 + Math.random() * 90000000000000000)
-                var fileName = rnd + "." +extension
+                var fileName = rnd + "." + extension
                 const uploadTask = await storage.ref(`/`).child(fileName).put(rows[i].file);
                 await storage.ref('/').child(fileName).getDownloadURL().then((url) => {
                     rows[i].url = url
                 })
             }
         }
-        for (var i = 0; i < rows.length; i++){
+        for (var i = 0; i < rows.length; i++) {
             await addReportURL(location.state.uid, rows[i]['url'], rows[i]['report'])
         }
+        history.push("/patientSearch")
+
     }
 
     return (
